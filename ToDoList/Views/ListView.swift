@@ -27,7 +27,7 @@ struct ListView: View {
                 EditButton()
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink("Add", destination: Text("Destination"))
+                NavigationLink("Add", destination: AddView())
             }
         }
     }
