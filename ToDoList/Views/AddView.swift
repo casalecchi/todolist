@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct AddView: View {
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var listViewModel: ListViewModel
     @State private var newTitle: String = ""
+    
+    @State private var alertTitle: String = ""
+    @State private var showAlert: Bool = false
     
     var body: some View {
         ScrollView {
@@ -20,7 +25,10 @@ struct AddView: View {
                 .cornerRadius(10)
                 
                 Button {
-                    
+                    if textIsAppropriated() {
+                        listViewModel.addItem(newTitle)
+                        dismiss()
+                    }
                 } label: {
                     Text("Save".uppercased())
                         .foregroundColor(.white)
@@ -34,6 +42,18 @@ struct AddView: View {
             .padding(14)
         }
         .navigationTitle("Add an Item 🖊️")
+        .alert(isPresented: $showAlert) {
+            Alert(title: Text(alertTitle))
+        }
+    }
+    
+    func textIsAppropriated() -> Bool {
+        if newTitle.count < 3 {
+            alertTitle = "Your new item must be at least 3 characters long!"
+            showAlert = true
+            return false
+        }
+        return true
     }
 }
 
@@ -42,5 +62,6 @@ struct AddView_Previews: PreviewProvider {
         NavigationStack {
             AddView()
         }
+        .environmentObject(ListViewModel())
     }
 }
