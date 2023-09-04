@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ItemModel: Identifiable, Equatable {
+struct ItemModel: Identifiable {
     let id: String
     let title: String
     let isCompleted: Bool
@@ -16,10 +16,6 @@ struct ItemModel: Identifiable, Equatable {
         self.id = id
         self.title = title
         self.isCompleted = isCompleted
-    }
-    
-    static func ==(lhs: ItemModel, rhs: ItemModel) -> Bool {
-        lhs.id == rhs.id
     }
     
     func updateCompletion() -> ItemModel {
